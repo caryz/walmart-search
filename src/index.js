@@ -4,5 +4,13 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import WalmartService from './api/WalmartService';
+
+const walmartService = new WalmartService();
+
+ReactDOM.render(
+  <App service={walmartService} />,
+  document.getElementById('root')
+);
+
 registerServiceWorker();
