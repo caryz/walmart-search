@@ -65,21 +65,21 @@ class App extends Component {
     return Promise.all([recommendationPromise, lookupPromise]);
   }
 
+  handleModalExit = () => {
+    this.setState({ selectedItem: null, recItems: null });
+  };
+
   render() {
-    // const stringProps = JSON.stringify(this.props);
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <br />
         <SearchBar onSubmit={this.callSearch}/>
         <Results
           items={this.state.results}
           onSelection={this.handleSelection}
         />
-        <Details itemDetails={this.state.selectedItem}
+        <Details 
+          itemDetails={this.state.selectedItem}
+          onModalExit={this.handleModalExit}
           recItems={this.state.recItems} />
       </div>
     );
