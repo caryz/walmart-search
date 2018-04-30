@@ -23,7 +23,7 @@ export class Details extends Component {
 
   buildRecommendedItems() {
     const recItems = this.props.recItems;
-    if (!recItems) { return }
+    if (!recItems) { return "No recommendations :(" }
     console.log("Recommended");
     console.log(recItems);
 

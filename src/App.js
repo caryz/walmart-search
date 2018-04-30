@@ -39,7 +39,10 @@ class App extends Component {
     const recommendationPromise = this.props.service
       .recommendations(itemId)
       .then(result => {
+        // successful response without recommendations:
+        // {"errors":[{"code":4022,"message":"No recommendations found for item 49802799"}]}
         if (result.errors) {
+          this.setState({ recItems: null });
           return Promise.reject(result.errors);
         }
         this.setState({ recItems: result });
