@@ -11,19 +11,19 @@ class WalmartService {
   productLookupUri = `${baseUri}/v1/items/{itemId}?apiKey=${apiKey}`;
 
   // v1/nbp?apiKey={apiKey}&itemId={itemID}
-  recommendationsUri = `${baseUri}/v1/nbp?apiKey=${apiKey}&itemId={itemID}`;
+  recommendationsUri = `${baseUri}/v1/nbp?apiKey=${apiKey}&itemId={itemId}`;
 
-  search = query => {
+  search(query) {
     return this.request(this.searchUri.replace("{query}", query));
-  };
+  }
 
-  productLookup = itemId => {
+  productLookup(itemId) {
     return this.request(this.productLookupUri.replace("{itemId}", itemId));
   };
 
-  recommendations = itemId => {
+  recommendations(itemId) {
     return this.request(this.recommendationsUri.replace("{itemId}", itemId));
-  };
+  }
 
   handleErrors(res) {
     if(!res.ok) {
@@ -32,7 +32,7 @@ class WalmartService {
     return res
   }
 
-  request = (url, options) => {
+  request(url, options) {
     return fetch(url, options)
       .then(res => {
         if (res.ok) {
@@ -44,7 +44,7 @@ class WalmartService {
         console.error(error);
         return Promise.reject(error);
       });
-  };
+  }
 
   // TODO: resolve CORS issue
   // request = (url, options) => {

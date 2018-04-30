@@ -9,25 +9,28 @@ export class Results extends Component {
 
   getResults() {
     const items = this.props.items;
-    if (items != null) {
-      let tags = [];
-      console.log("getResults: ");
-      return items.map((item, index, items) => {
-        return (
-          <li key={index}>
-            <img src= {item.thumbnailImage} width='30' />
-            {item.name} | ${item.salePrice}
-          </li>
-        )
-      });
-    }
+    if (!items) { return }
+    console.log("getResults");
+
+    return items.map((item, index, items) => { return (
+      <li key={index} 
+        onClick={() => this.props.onSelection(item.itemId)}>
+
+        <img src= {item.thumbnailImage} width='30' />
+        {item.name} | ${item.salePrice}
+
+      </li>
+    )});
   }
 
   render() {
     return (
-      <ul>
-        {this.getResults()}
-      </ul>
+      <div>
+        <h2>Results</h2>
+        <ul>
+          {this.getResults()}
+        </ul>
+      </div>
     );
   }
 }

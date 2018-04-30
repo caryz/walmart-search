@@ -11,30 +11,59 @@ class App extends Component {
     this.state = {
       results: null,
       selectedItem: null,
-      recommendedItems: null
+      recItems: null
     };
     App.defaultProps = {
       adsf: null
-    }
+    };
 
     this.callSearch = this.callSearch.bind(this);
+    this.handleSelection = this.handleSelection.bind(this);
   }
 
   callSearch(event, query) {
     event.preventDefault();
     console.log("Query: " + query);
+    if (!query) { return }
 
     return this.props.service
       .search(query)
       .then(result => {
         this.setState({ results: result.items });
-        console.log("Set items: " + result.items);
+        console.log(result.items);
       })
   }
 
-  render() {
-    const stringProps = JSON.stringify(this.props);
+  handleSelection(itemId) {
+    console.log("HandlingSelection");
+    const recommendationPromise = this.props.service
+      .recommendations(itemId)
+      .then(result => {
+        if (result.errors) {
+          return Promise.reject(result.errors);
+        }
+        this.setState({ recItems: result });
+      })
+      .catch(error => {
+        console.log("Recommendation error: ", error);
+        return Promise.resolve();
+      });
 
+    const lookupPromise = this.props.service
+      .productLookup(itemId)
+      .then(result => {
+        this.setState({ selectedItem: result });
+      })
+      .catch(error => {
+        console.log("Lookup error:", error);
+        return Promise.resolve();
+      });
+
+    return Promise.all([recommendationPromise, lookupPromise]);
+  }
+
+  render() {
+    // const stringProps = JSON.stringify(this.props);
     return (
       <div className="App">
         <header className="App-header">
@@ -45,8 +74,10 @@ class App extends Component {
         <SearchBar onSubmit={this.callSearch}/>
         <Results
           items={this.state.results}
-          onSelect={this.handleSelection}
+          onSelection={this.handleSelection}
         />
+        <Details itemDetails={this.state.selectedItem}
+          recItems={this.state.recItems} />
       </div>
     );
   }
