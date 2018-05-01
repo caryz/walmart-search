@@ -79,8 +79,7 @@ export class Details extends Component {
   };
 
   handleClose = () => {
-    this.props.onModalExit();
-    this.setState({ open: false });
+    this.setState({ open: false }, this.props.onModalExit());
   };
 
   render() {
@@ -89,10 +88,12 @@ export class Details extends Component {
       <div>
         <Dialog
           fullScreen={fullScreen}
-          open={!this.state.open && this.props.itemDetails != null}
+          open={!this.state.open && this.props.showModal}
           onClose={this.handleClose}>
+          { !this.props.itemDetails &&
+            <DialogTitle id="responsive-dialog-title">Loading Item Details...</DialogTitle>
+          }
           {this.buildDetails()}
-
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">
               Close

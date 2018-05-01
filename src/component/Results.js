@@ -9,8 +9,8 @@ const styles = theme => ({
     color: theme.palette.text.secondary,
   },
   container: {
-    marginTop: 80,
     padding: theme.spacing.unit * 2,
+    marginLeft: 3,
     flexGrow: 1,
   },
   money: {
@@ -35,7 +35,7 @@ export class Results extends Component {
     return items.map((item, index, items) => { return (
       <Grid item md={3} key={index} style={{ maxWidth: "100%" }}>
         <Paper className={classes.paper}
-          key={index} elevation={4}>
+          key={index} elevation={8}>
           <img src={item.mediumImage} alt={item.mediumImage}
             className={classes.pointer}
             onClick={() => this.props.onSelection(item.itemId)}/> <br />

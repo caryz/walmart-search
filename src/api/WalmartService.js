@@ -1,5 +1,5 @@
 
-const baseUri = "https://api.walmartlabs.com";
+const baseUri = "https://cors-anywhere.herokuapp.com/https://api.walmartlabs.com";
 const apiKey = "xrn85m3k5yhbw2c2f47yzw2w";
 
 class WalmartService {
@@ -45,25 +45,6 @@ class WalmartService {
         return Promise.reject(error);
       });
   }
-
-  // TODO: resolve CORS issue
-  // request = (url, options) => {
-  //   const defaultOptions = {
-  //     mode: 'no-cors'
-  //   }
-
-  //   return fetch(url, defaultOptions)
-  //     .then(response => {
-  //       console.log('response ok');
-  //       console.log(response.json());
-  //       return response;
-  //     })
-  //     // .catch(error => {
-  //     //   console.error("Error fetching request");
-  //     //   console.error(error);
-  //     //   return Promise.reject(error);
-  //     // });
-  // };
 }
 
 export default WalmartService;
