@@ -19,7 +19,6 @@ class App extends Component {
 
   callSearch(event, query) {
     event.preventDefault();
-    console.log("Query: " + query);
     if (!query) { return }
 
     return this.props.service
@@ -30,7 +29,6 @@ class App extends Component {
           this.setState({ errorMessage:
             `Could not find "${query}". Please try searching something else 😁` });
         }
-        console.log(result.items);
       })
       .catch(error => {
         console.log("query error: ", error);
@@ -78,11 +76,11 @@ class App extends Component {
     return (
       <div className="App">
         <SearchBar onSubmit={this.callSearch} />
-        {this.state.errorMessage}
         <Results
           items={this.state.results}
           onSelection={this.handleSelection}
         />
+        {this.state.errorMessage}
         <Details 
           itemDetails={this.state.selectedItem}
           onModalExit={this.handleModalExit}

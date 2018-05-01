@@ -28,7 +28,6 @@ export class SearchBar extends Component {
 
   handleChange(event) {
     this.setState({ searchQuery: event.target.value });
-    console.log('SearchQuery: ' + this.state.searchQuery);
   }
 
   render() {

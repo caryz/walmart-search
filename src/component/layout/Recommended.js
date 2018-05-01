@@ -62,7 +62,7 @@ export class Recommended extends Component {
     )}
     return (
       <div className={classes.root}>
-        <Typography variant="display1" style={{align: "left"}}>
+        <Typography variant="headline" style={{align: "left"}}>
           Sponsored Products
         </Typography>
         <GridList className={classes.gridList} cols={2.5}>
