@@ -1,29 +1,23 @@
 import React, { Component } from 'react';
 import { withStyles } from 'material-ui/styles';
-import { Button, Modal, Typography } from 'material-ui';
+import { Button, Typography, Paper } from 'material-ui';
+import Dialog, {
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  withMobileDialog,
+} from 'material-ui/Dialog';
 import Recommended from './layout/Recommended';
 import "./../App.css";
 
-const styles = theme => ({
+const styles = {
   paper: {
-    position: 'absolute',
-    width: theme.spacing.unit * 80,
-    backgroundColor: theme.palette.background.paper,
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing.unit * 4,
-  },
-});
-
-function getModalStyle() {
-  const top = 50;
-  const left = 50;
-
-  return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`,
-  };
-}
+    paddingRight: 10,
+    backgroundColor: '#F5F5F5',
+    textAlign: 'center',
+  }
+};
 
 export class Details extends Component {
   constructor(props) {
@@ -39,17 +33,29 @@ export class Details extends Component {
     if (!itemDetails) { return }
     console.log("Item Details");
     console.log(itemDetails);
+
     return (
       <div>
-        <Typography variant="title" id="modal-title">
-          {itemDetails.name}
-        </Typography>
-        <Typography variant="subheading" id="simple-modal-description">
-          List Price: ${itemDetails.msrp}
-          Price: ${itemDetails.salePrice}
-          Rating: <img src={itemDetails.customerRatingImage} /> {itemDetails.customerRating}
-        </Typography>
-        <img src={itemDetails.mediumImage} />
+        <DialogTitle id="responsive-dialog-title">{itemDetails.name}</DialogTitle>
+        <DialogContent>
+          <Paper style={styles.paper} elevation={4}>
+            <img className="left-aligned" src={itemDetails.mediumImage} />
+            <DialogContentText className="detail-heading-text">
+                MSRP: <b>${itemDetails.msrp}</b><br />
+                Price: <b>${itemDetails.salePrice}</b><br />
+                Rating: <img src={itemDetails.customerRatingImage} /><br />
+                Color: <b>{itemDetails.color}</b><br />
+                Brand Name: <b>{itemDetails.brandName}</b><br />
+                Stock: <b>{itemDetails.stock}</b>
+            </DialogContentText>
+            <div style={{ clear: 'both' }}></div>
+          </Paper>
+          <h4>Details</h4>
+          <DialogContentText>
+            {itemDetails.shortDescription}
+          </DialogContentText>
+        </DialogContent>
+        <Recommended items={this.buildRecommendedItems()} />
       </div>
     );
   }
@@ -64,7 +70,7 @@ export class Details extends Component {
     recItems.map((item, index, recItems) => {
       data.push({
         title: item.name,
-        img: item.thumbnailImage,
+        img: item.mediumImage,
         price: "$" + item.salePrice,
       });
     });
@@ -72,7 +78,7 @@ export class Details extends Component {
     return data;
   }
 
-  // MODALS
+  // Dialog Modals
   handleOpen = () => {
     this.setState({ open: true });
   };
@@ -83,25 +89,25 @@ export class Details extends Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { fullScreen } = this.props; // for responsive modal
     return (
       <div>
-        <Modal
-          aria-labelledby="simple-modal-title"
-          aria-describedby="simple-modal-description"
+        <Dialog
+          fullScreen={fullScreen}
           open={!this.state.open && this.props.itemDetails != null}
-          onClose={this.handleClose}
-        >
-          <div style={getModalStyle()} className={classes.paper}>
-            {this.buildDetails()}
+          onClose={this.handleClose}>
+          {this.buildDetails()}
 
-            <Recommended items={this.buildRecommendedItems()} />
-          </div>
-        </Modal>
+          <DialogActions>
+            <Button onClick={this.handleClose} color="primary">
+              Close
+            </Button>
+          </DialogActions>
+        </Dialog>
       </div>
     );
   }
 }
 
 // export default Details;
-export default withStyles(styles)(Details);
+export default withMobileDialog()(Details);
