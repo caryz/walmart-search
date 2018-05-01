@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import GridList, { GridListTile, GridListTileBar } from 'material-ui/GridList';
 import { Typography, Paper } from 'material-ui';
-import Subheader from 'material-ui/List/ListSubheader';
-import IconButton from 'material-ui/IconButton';
 
 const styles = theme => ({
   root: {
@@ -56,7 +53,7 @@ export class Recommended extends Component {
       ))
     );
 
-    if (!itemList || itemList.length == 0) { return (
+    if (!itemList || itemList.length === 0) { return (
       <div className={classes.root}>
         <Typography variant="display1" style={{ align: "left" }}>
           No Recommended Items :(

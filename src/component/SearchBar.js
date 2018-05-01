@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
 import { withStyles } from 'material-ui/styles';
 import { Icon, Button, TextField } from 'material-ui';
-import { AppBar, Toolbar, Typography } from 'material-ui';
+import { AppBar, Toolbar } from 'material-ui';
 
 const styles = theme => ({
+  root: {
+    flexGrow: 1,
+  },
+  bar: {
+
+  },
   button: {
     margin: theme.spacing.unit,
   },
@@ -28,19 +34,18 @@ export class SearchBar extends Component {
   render() {
     const { classes } = this.props;
     return (
-      <form onSubmit={event => this.props.onSubmit(event, this.state.searchQuery)}>
-        <AppBar position="static" color="default">
+      <form className={classes.root} onSubmit={event => this.props.onSubmit(event, this.state.searchQuery)}>
+        <AppBar color="default" className={classes.bar}>
           <Toolbar>
               <TextField
                 id="search"
                 label="Search Walmart"
                 type="search"
                 margin="normal"
-                style={{ width: '75%' }}
-                type="text" 
+                style={{ width: '80%' }}
                 value={this.state.searchQuery}
                 onChange={this.handleChange}
-                    onSubmit={event => this.props.onSubmit(event, this.state.searchQuery)}
+                onSubmit={event => this.props.onSubmit(event, this.state.searchQuery)}
               />
               <Button className={classes.button} variant="raised" color="primary"
                 type="submit" value="Submit">
@@ -50,14 +55,6 @@ export class SearchBar extends Component {
             </Toolbar>
         </AppBar>
       </form>
-      // <form onSubmit={event => this.props.onSubmit(event, this.state.searchQuery)}>
-      //   <label>
-      //     Search:
-      //     <input type="text" value={this.state.searchQuery}
-      //      onChange={this.handleChange} />
-      //   </label>
-      //   <input type="submit" value="Submit" />
-      // </form>
     );
   }
 }

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { withStyles } from 'material-ui/styles';
-import { Button, Typography, Paper } from 'material-ui';
+import { Button, Paper } from 'material-ui';
 import Dialog, {
   DialogActions,
   DialogContent,
@@ -31,19 +30,18 @@ export class Details extends Component {
   buildDetails() {
     const itemDetails = this.props.itemDetails
     if (!itemDetails) { return }
-    console.log("Item Details");
-    console.log(itemDetails);
-
     return (
       <div>
         <DialogTitle id="responsive-dialog-title">{itemDetails.name}</DialogTitle>
         <DialogContent>
           <Paper style={styles.paper} elevation={4}>
-            <img className="left-aligned" src={itemDetails.mediumImage} />
+            <img className="left-aligned" src={itemDetails.mediumImage}
+              alt={itemDetails.mediumImage} />
             <DialogContentText className="detail-heading-text">
                 MSRP: <b>${itemDetails.msrp}</b><br />
                 Price: <b>${itemDetails.salePrice}</b><br />
-                Rating: <img src={itemDetails.customerRatingImage} /><br />
+                Rating: <img src={itemDetails.customerRatingImage}
+                          alt={itemDetails.customerRating} /><br />
                 Color: <b>{itemDetails.color}</b><br />
                 Brand Name: <b>{itemDetails.brandName}</b><br />
                 Stock: <b>{itemDetails.stock}</b>
@@ -63,9 +61,6 @@ export class Details extends Component {
   buildRecommendedItems() {
     const recItems = this.props.recItems;
     if (!recItems) { return [] }
-    console.log("Recommended");
-    console.log(recItems);
-
     let data = [];
     recItems.map((item, index, recItems) => {
       data.push({
@@ -73,8 +68,8 @@ export class Details extends Component {
         img: item.mediumImage,
         price: "$" + item.salePrice,
       });
+      return null;
     });
-    console.log(data);
     return data;
   }
 
@@ -109,5 +104,4 @@ export class Details extends Component {
   }
 }
 
-// export default Details;
 export default withMobileDialog()(Details);
